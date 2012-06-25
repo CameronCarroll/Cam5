@@ -7,7 +7,40 @@
 # templating for personal website/blog.
 
 class CamSite < Sinatra::Base
+
 	get "/" do
 		erb :index
+	end
+
+	get "/log/?" do
+		erb :log_index
+	end
+
+	get "/log/ruby/?" do
+		erb :ruby_index
+	end
+
+	get "/log/fortran/?" do
+		erb :fortran_index
+	end
+
+	get "/log/matlab/?" do
+		erb :matlab_index
+	end
+
+	get "/log/misc/?" do
+		erb :misc_index
+	end
+
+	get "/log/ruby/rubyboot/?" do
+		erb :rubyboot
+	end
+
+	get "/academic/?" do
+		erb :academic_index
+	end
+
+	get "/projects/?" do
+		erb :project_index
 	end
 end

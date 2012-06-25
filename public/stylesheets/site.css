@@ -14,5 +14,15 @@ body {
 }
 
 /* Content Styles */
+.hero-unit ul {
+	display: inline;
+	list-style-type: none;
+	overflow: none;
+}
+
+.hero-unit ul li {
+	float: left;
+	margin-left: 45px;
+}
 
 /* Footer Styles */
