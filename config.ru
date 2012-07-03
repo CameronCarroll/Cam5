@@ -1,6 +1,8 @@
-require 'sinatra'
+
 require 'rubygems'
+require 'bundler/setup'
 require 'coderay'
+require 'sinatra'
 
 require 'rack/codehighlighter'
 
