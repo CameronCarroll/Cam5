@@ -1,0 +1,132 @@
+<div class="row">
+  <div class="span6 offset1">
+    <h2> Ruby/RVM Quick Installation Reference </h2>
+    <br />
+
+    <div class="accordion" id="accordion2">
+      <div class="accordion-group">
+        <div class="accordion-heading">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+            Introduction: Why use RVM?
+          </a>
+        </div>
+        <div id="collapseOne" class="accordion-body collapse in">
+          <div class="accordion-inner">
+            <p>
+              RVM is a tool to make managing Ruby installations significantly easier. Available for Linux & Mac users,
+              this program is a godsend for anyone who has to consider using multiple versions of Ruby on the same machine.
+              <br /> <br />
+              RVM also allows you to package installed gems into 'gemsets,' which keeps gems for different applications
+              separated into their own modules. Finally, RVM makes getting a new version of Ruby a snap, with its dependency installation and Ruby compilation tools.
+              <br /> <br />
+              This guide is a reference to resolving the dependencies and installing Ruby 1.9.3 on RVM, which itself will
+              coexist with a native ruby installation.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-group">
+        <div class="accordion-heading">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+            Why do we need a native Ruby installation?
+          </a>
+        </div>
+        <div id="collapseTwo" class="accordion-body collapse">
+          <div class="accordion-inner">
+            RVM requires a native Ruby installation in order to compile 1.9.x versions. There are three choices
+            here: Use RVM to install Ruby 1.8.7, use distribution package manager to install whatever Ruby is stable,
+            or do a manual native installation.
+            <br /><br />
+            The third option is slightly more involved than the other two, but is the one I've chosen. It really doesn't
+            matter since RVM will always choose its own Rubies after installation.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-group">
+        <div class="accordion-heading">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+            Deprecation Disclaimer: Not accurate forever.
+          </a>
+        </div>
+        <div id="collapseThree" class="accordion-body collapse">
+          <div class="accordion-inner">
+            <p>
+              This tutorial is accurate on Fedora 17 as of July, 2012. The <a href="https://rvm.io/rvm/install/">RVM installation guide</a> warns that any external tutorials are not supported. I only wrote this guide because I didn't want to sort through long documentation pages every time I reinstall Ruby.
+              <br /><br />
+              So here's my own disclaimer: I can't guarantee that these installation instructions are correct for your system.
+              I test them from time to time on a fresh Fedora VM however; If you're running a recent version of Fedora, I would call it safe. If you're using a different distribution of Linux, do <code lang="bash">rvm requirements</code> to determine what the correct package names and additional requirements are for your system. (Just run the RVM installation script before doing the native Ruby installation.)
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <h3> Installing Native Ruby 1.9.3 </h3>
+    <br />
+
+    <h6> Grab Ruby source: </h6>
+    <pre class="code">:::Bash
+$ curl -O http://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.3-p194.tar.gz
+$ tar -xvf ruby-1.9.3-p194.tar.gz
+$ cd ruby-1.9.3-p194
+    </pre>
+    <br />
+    <p>
+      Check <a href="http://www.ruby-lang.org/en/downloads/"> Ruby Download</a> for a more recent version than p194.
+      <br /> <br />
+      Dependencies can be resolved manually by doing <code lang="bash"> ./configure && make</code> and checking to see what Ruby complains about in the compiler output. A much easier way would be to simply install RVM and run <code lang="bash">rvm requirements</code>.
+    </p>
+    <br />
+    
+    <h6> Install Ruby/RVM dependencies: </h6>
+    <pre class="code">:::Bash
+$ sudo yum install ncurses ncurses-devel gdbm-devel libffi-devel openssl-devel libyaml libyaml-devel readline-devel tk tk-devel patch bison autoconf automake
+$ sudo yum install git gcc-c++ readline zlib zlib-devel make bzip2 libtool iconv-devel
+    </pre>
+    <br />
+    <p>
+      The first set of packages are the requirements I divined from configuration and compiler output, before learning about <code lang="bash">rvm requirements</code>. The second set are the remaining suggested requirements for my platform, which were either already installed or ultimately unnecessary.
+    </p>
+
+    <h6> Compile & install native Ruby </h6>
+      <pre class="code">:::Bash
+$ ./configure 
+$ make 
+$ sudo make install 
+      </pre>
+
+      <h6> Install RVM </h6>
+      <pre class="code">:::Bash
+$ curl https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer | bash -s stable
+      </pre>
+
+      <h6> Use RVM to install Ruby and set as default: </h6>
+      <pre class="code">:::Bash
+$ rvm install ruby-1.9.3-head
+$ rvm use ruby-1.9.3-head --default
+      </pre>
+  </div> <!-- content span-->
+
+
+
+  <div class="span3 well offset1">
+    <center>
+      <h3>Ruby/RVM on Fedora</h3>
+      <hr />
+      <img src="/img/fedora_dog.jpg" alt="Dog wearing a Fedora"></img>
+      <dl>
+        <dt> Originally Written: </dt>
+        <dd> March 3, 2012 </dd>
+        <dt> Updated on: </dt>
+        <dd> July 2, 2012 </dd>
+        <hr />
+        <br />
+        <dt> References</dt>
+        <dd> <a href="https://rvm.io/rvm/install/"> Official RVM Installation Guide</a> </dd>
+        <dd> <a href="http://www.ruby-lang.org/en/downloads/"> Ruby Source Download</a> </dd>
+        <hr />
+        <dd> <a href="http://www.everystockphoto.com/photographer.php?photographer_id=68073"> Photo by Sarah May Scott </a></dd>
+      </dl>
+    </center>
+  </div>
+</div>

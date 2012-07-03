@@ -6,6 +6,7 @@
 # Purpose: Sinatra script to handle routing and
 # templating for personal website/blog.
 
+
 class CamSite < Sinatra::Base
 
 	get "/" do
