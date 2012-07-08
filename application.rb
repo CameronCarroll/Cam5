@@ -37,6 +37,14 @@ class CamSite < Sinatra::Base
 		erb :rubyboot
 	end
 
+	get "/log/ruby/ruby2c2fortran/?" do
+		erb :ruby2c2fortran
+	end
+
+	get "/log/fortran/ruby2c2fortran/?" do
+		erb :ruby2c2fortran
+	end
+
 	get "/academic/?" do
 		erb :academic_index
 	end

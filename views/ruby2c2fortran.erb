@@ -1,0 +1,140 @@
+<div class="row">
+  <div class="span6 offset1">
+    <h2> Calling Fortran functions from Ruby scripts. </h2>
+    <br />
+
+    <div class="accordion" id="accordion2">
+      <div class="accordion-group">
+        <div class="accordion-heading">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+            Why Ruby, why Fortran, and why go through this trouble?
+          </a>
+        </div>
+        <div id="collapseOne" class="accordion-body collapse in">
+          <div class="accordion-inner">
+            <p>
+              Ruby is a popular, modern scripting language renowned for its metaprogramming, string handling,
+              DSL generation and programmer enjoyment. Fortran is an ancient language with an entrenched history, lightning-fast computation speed, and good support for parallelization/vectorization.
+              <br /><br />
+              Although I personally don't need to offload heavy computation (due to lack of a use case) I'm interested in exploring the use of Fortran to take care of mathematical routines while using Ruby for control.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-group">
+        <div class="accordion-heading">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+            Ruby -> (C + Fortran) -- [Flowchart]
+          </a>
+        </div>
+        <div id="collapseTwo" class="accordion-body collapse">
+          <div class="accordion-inner">
+            (Flowcharthere)
+          </div>
+        </div>
+      </div>
+      <div class="accordion-group">
+        <div class="accordion-heading">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+            Ruby/C/Fortran "bridge" build script
+          </a>
+        </div>
+        <div id="collapseThree" class="accordion-body collapse">
+          <div class="accordion-inner">
+            <p>
+              While working out how to link things together and include the correct libraries, I began writing a Rake script to handle the build. This is essentially a smorgasborg of mkmf.rb, <a href="http://www.rubycentral.com/pickaxe/ext_ruby.html"> this chapter from the Pickaxe on Ruby/C extensions</a>, and <a href="http://www.ats.ucla.edu/clusters/common/computing/c-fortran-interop.html"> this tutorial on C/Fortran interoperation.</a>
+              <br /><br />
+              <a href="https://gist.github.com/3035906">The build script</a> is currently considered 'alpha' software. What this really means is that it's only truly fit/safe for my use; The include string for C compilation is hard-coded and copied from my system's Makefile. (Fedora 17, Ruby 1.9.3, <a href="/log/ruby/rubyboot"> installation described here.</a>)
+              <br /><br />
+              I intend to make this build script more robust. It needs a full set of flags for intel compilers, as well as figuring out which directories to include automatically. For now, using GNU compilers and tailoring the '*flags' include string should be enough to get it working. 
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <h3> Lets check out the implementation: </h3>
+    <br />
+
+    <h6> Write a Fortran function to invoke: </h6>
+    <pre class="code">:::Fortran
+! Fortran function to be consumed by C program.
+function test_ruby_c_fort(i) result(j)
+  use iso_c_binding
+  implicit none
+
+  integer(C_INT), intent(in) :: i
+  integer(C_INT)             :: j
+
+  j = i + 42
+end function test_ruby_c_fort
+    </pre>
+    <br />
+    <p>
+      Notice the use of iso_c_binding intrinsic module, which contains precision definitions for C integers. Use the datatypes and precision definitions here to make Fort datatypes play nicely with C datatypes.
+      <br /><br />
+      Use an explicit bind(c) call to make Fort derived types play nicely with C structures:
+      <pre class="code">:::Fortran
+use iso_c_binding
+type, bind(c) :: myftype
+  integer(c_int) :: i, j
+  real(c_float) :: s
+end type myftype
+      </pre>
+    </p>
+    <br />
+    
+    <h6> Write a C program to interface between Fortran and Ruby </h6>
+    <pre class="code">:::Bash
+$ sudo yum install ncurses ncurses-devel gdbm-devel libffi-devel openssl-devel libyaml libyaml-devel readline-devel tk tk-devel patch bison autoconf automake
+$ sudo yum install git gcc-c++ readline zlib zlib-devel make bzip2 libtool iconv-devel
+    </pre>
+    <br />
+    <p>
+      The first set of packages are the requirements I divined from configuration and compiler output, before learning about <code lang="bash">rvm requirements</code>. The second set are the remaining suggested requirements for my platform, which were either already installed or ultimately unnecessary.
+    </p>
+
+    <h6> Compile & install native Ruby </h6>
+      <pre class="code">:::Bash
+$ ./configure 
+$ make 
+$ sudo make install 
+      </pre>
+
+      <h6> Install RVM </h6>
+      <pre class="code">:::Bash
+$ curl https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer | bash -s stable
+      </pre>
+
+      <h6> Use RVM to install Ruby and set as default: </h6>
+      <pre class="code">:::Bash
+$ rvm install ruby-1.9.3-head
+$ rvm use ruby-1.9.3-head --default
+      </pre>
+  </div> <!-- content span-->
+
+
+
+  <div class="span3 well offset1">
+    <center>
+      <h3>Ruby/C/Fortran Interoperation</h3>
+      <hr />
+      <img src="/img/fortran.jpg" alt="Dog wearing a Fedora"></img>
+      <dl>
+        <dt> Originally Written: </dt>
+        <dd> July 3, 2012 </dd>
+        <dt> Updated on: </dt>
+        <dd> July 3, 2012 </dd>
+        <hr />
+        <br />
+        <dt> References:</dt>
+        <br />
+        <dd> <a href="http://www.ruby-forum.com/topic/78239#126917"> Ruby2C2Fortran Description </a> </dd>
+        <dd> <a href="http://www.rubycentral.com/pickaxe/ext_ruby.html"> Pickaxe: Ruby/C Extensions </a> </dd>
+        <dd> <a href="http://www.ats.ucla.edu/clusters/common/computing/c-fortran-interop.html"> C/Fortran Interoperation (Brief)</a> </dd>
+        <dd> <a href="http://www.fortran.bcs.org/2002/interop.htm"> C/Fortran Interoperation (Detailed)</a> </dd>
+        <dd> <a href="http://gcc.gnu.org/onlinedocs/gfortran/Interoperability-with-C.html"> C/Fortran Interoperation (GFortran)
+      </dl>
+    </center>
+  </div>
+</div>
