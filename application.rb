@@ -52,4 +52,8 @@ class CamSite < Sinatra::Base
 	get "/projects/?" do
 		erb :project_index
 	end
+
+	get "/projects/exxon/?" do
+		erb :exxon
+	end
 end
