@@ -66,9 +66,10 @@
 
     <h6> Grab Ruby source: </h6>
     <pre class="code">
-$ curl -O http://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.3-p194.tar.gz
-$ tar -xvf ruby-1.9.3-p194.tar.gz
-$ cd ruby-1.9.3-p194
+curl -O http://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.3-p194.tar.gz
+
+tar -xvf ruby-1.9.3-p194.tar.gz
+cd ruby-1.9.3-p194
     </pre>
     <br />
     <p>
@@ -80,8 +81,9 @@ $ cd ruby-1.9.3-p194
     
     <h6> Install Ruby/RVM dependencies: </h6>
     <pre class="code">:::Bash
-$ sudo yum install ncurses ncurses-devel gdbm-devel libffi-devel openssl-devel libyaml libyaml-devel readline-devel tk tk-devel patch bison autoconf automake
-$ sudo yum install git gcc-c++ readline zlib zlib-devel make bzip2 libtool iconv-devel
+sudo yum install ncurses ncurses-devel gdbm-devel libffi-devel openssl-devel libyaml libyaml-devel readline-devel tk tk-devel patch bison autoconf automake
+
+sudo yum install git gcc-c++ readline zlib zlib-devel make bzip2 libtool
     </pre>
     <br />
     <p>
@@ -90,20 +92,30 @@ $ sudo yum install git gcc-c++ readline zlib zlib-devel make bzip2 libtool iconv
 
     <h6> Compile & install native Ruby </h6>
       <pre class="code">
-$ ./configure 
-$ make 
-$ sudo make install 
+./configure 
+make 
+sudo make install 
       </pre>
 
       <h6> Install RVM </h6>
       <pre class="code">
-$ curl https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer | bash -s stable
+curl https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer | bash -s stable
       </pre>
 
       <h6> Use RVM to install Ruby and set as default: </h6>
       <pre class="code">
-$ rvm install ruby-1.9.3-head
-$ rvm use ruby-1.9.3-head --default
+rvm install ruby-1.9.3-head
+
+rvm use ruby-1.9.3-head --default
+      </pre>
+
+      <br />
+      <br />
+      <h3> In case you need to remove Ruby/RVM: </h3>
+      <pre class="code">
+rvm implode
+whereis ruby
+rm -rf (files/directories listed in whereis ruby)
       </pre>
   </div> <!-- content span-->
 
@@ -118,7 +130,7 @@ $ rvm use ruby-1.9.3-head --default
         <dt> Originally Written: </dt>
         <dd> March 3, 2012 </dd>
         <dt> Updated on: </dt>
-        <dd> July 2, 2012 </dd>
+        <dd> July 23, 2012 </dd>
         <hr />
         <br />
         <dt> References</dt>
