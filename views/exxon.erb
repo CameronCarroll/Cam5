@@ -1,84 +1,47 @@
-<div class="hero-unit">
-  <h2> 
-    Exxon-Valdez Oil Spill Simulation
-    <small> A portable Matlab script.</small>
-  </h2>
-  <br />
-  <p>
-    This simulation was a final project in a computer apps (Matlab) class. I have no idea as to the accuracy of the simulation, but it demonstrates a couple interesting techniques for graph generation & visualization.
-  </p>
+<h2 id="nav"><a href="/">Home</a> &gt; Exxon Valdez Oil Spill Simulation</h2>
 
-  <a class="btn" href="https://gist.github.com/2669514"> Source Code (GPL License) </a>
-</div>
+<p> This simulation was the final project in my computer engineering applications (ie, Matlab) class. I was just following an algorithm and some initial conditions provided so I really don't know anything about the oil spill itself or if this is an accurate simulation, but I think it demonstrates a couple of useful techniques for graph generation &amp; visualization. Please see the <a href="https://gist.github.com/2669514"> Source Code (GPL License) </a></p>
 
-
-<div class="row">
-  <div class="span5">
-    <h2> Simulation Usage/Limitations: </h2>
-    <ul>
-      <li> I've tested this script on R2011A, but it should work on earlier versions as well.</li>
-      <li> You (probably) can't use cell mode to execute this; Be sure to change to folder, and be prepared for one extra file to be generated. (Figure file.) </li>
-      <li> If you find yourself playing with the parameters, you may want to check out the console simulation; Iterative time will be significantly lowered betwixt your experiments.</li>      
-    </ul>
-  </div>
-
-  <div class="span5 offset2">
-    <h6> Parameter Notes: </h6>
-    <ul>
-      <li> <b>Gallons Spilled:</b> The maximum value, 100k, is still 110 times smaller than the accepted estimate for the real spill. </li>
-      <li> <b>Wind Velocity:</b> Any value of significance quickly blows the oil out of the field; Wind speeds can reach as high as 40 miles per hour, which yields depressing results. </li>
-      <li> <b> Evaporation Rate: </b> Higher values yield relatively uninteresting results. This parameter may have an arbitrary basis.
-      </li>
-      <li> <b> Iterations: </b> More captures will make not only for a richer simulation, but also a longer one. Too long of a simulation and you may be watching the open ocean for a while. (And waiting a long time to watch anything.)</li>
-    </ul>
-  </div>
-</div>
-<br />
-<div class="row">
-  <div class="span5">
-    <h2> Simulation as a Movie</h2>
-    <p>
-      &nbsp;&nbsp;Matlab provides the very convenient movie() function, enabling visualizations of graph changes over time.
-      This simulation uses a grid-overlayed scatterplot to show oil propagation and ties a number of these state captures together.
-    </p>
-    <p>
-      &nbsp;&nbsp;None of the default visualizations are really intended for spatial data. Conveniently, the simulation already works on a grid; After drawing a grid for each frame, the mapping from array data to spatial data is apparent.
-    </p>
-    <p> 
-      I really wanted to use such toys as the <a href='http://www.mathworks.com/matlabcentral/fileexchange/12954'> Google Earth toolbox </a> or the <a href="http://www.mathworks.com/matlabcentral/fileexchange/19235-google-maps-loader"> Google Maps loader </a> to overlay the simulation grid on top of the real location in the Prince William Sound. I decided against it only because of the unknown accuracy of the simulation; It seemed a little pointless since I don't actually know which way the wind really blows.
-    </p>
-    <center>
-      <img src="/img/little_otter.jpg"> </img>
-    </center>
-  </div>
-
-  <div class="span5 offset2">
-    <h6> Result of Default Parameters:</h6>
-    <img src="/img/default.gif"></img>
+<h3> Result of Default Parameters:</h3>
+  <img src="/img/default.gif"></img>
   <br /> <br />
   <p> This image shows the oil spill stemming from the center-left of the grid. The oil spreads almost immediately into the east, but the number of captures is set too low to see any cells become oil-free.</p>
-  </div>
-</div>
-<br />
-<div class="row">
-  <div class="span5">
-    <h2> Saving/Loading Figures</h2>
-    <p>
-      &nbsp;&nbsp;Drawing a grid is actually a rather painful process, and attempting to do so on-the-fly would make the runtime unreasonable. 
-    </p>
-    <p>
-      &nbsp;&nbsp;This script generates and saves a grid figure to serve as the field, then uses load(file, '-mat') to load the figure. I elected to use load instead of hgload in order to avoid opening the figure while drawing. Ironically, after going through all the effort of 'silently' drawing each frame, I discovered that movie() forces a frame to be visible in order to captures it. 
-    </p>
-    <p>
-      &nbsp;&nbsp;load(file, '-mat') loads the figure data into a matlab structure; The relevant figure data (a nested structure) is hiding inside of the hgS_070000 key. This is then converted into a figure with struct2handle(figure.hgS_070000, 0) -- the zero corresponding to the parent figure. ('root figure': the Matlab environment.)
-    </p>
-    <br />
 
-  </div>
+<h3> Capturing Simulation into a Movie </h3>
+  <p> Matlab provides the very convenient movie() function, enabling visualizations of graph changes over time.
+    This simulation uses a grid-overlayed scatterplot to show oil propagation and ties a number of these state captures together.
+  </p>
+  <p> None of the default visualizations are really intended for spatial data. Conveniently, the simulation already works on a grid; After drawing a grid for each frame, the mapping from array data to spatial data is apparent.
+  </p>
+  <p> I really wanted to use such toys as the <a href='http://www.mathworks.com/matlabcentral/fileexchange/12954'> Google Earth toolbox </a> or the <a href="http://www.mathworks.com/matlabcentral/fileexchange/19235-google-maps-loader"> Google Maps loader </a> to overlay the simulation grid on top of the real location in the Prince William Sound. I decided against it only because of the unknown accuracy of the simulation; It seemed a little pointless since I don't actually know which way the wind really blows.
+  </p>
 
-  <div class="span5 offset2">
-    <h6> Result of Higher Parameters:</h6>
-    <img src="/img/medium.gif"></img>
+<h3> Saving/Loading Figures </h3>
+  <p> Drawing a grid is actually a rather painful process, and attempting to do so on-the-fly would make the runtime unreasonable. 
+  </p>
+  <p> This script generates and saves a grid figure to serve as the field, then uses load(file, '-mat') to load the figure. I elected to use load instead of hgload in order to avoid opening the figure while drawing. Ironically, after going through all the effort of 'silently' drawing each frame, I discovered that movie() forces a frame to become visible briefly in order to capture it. 
+  </p>
+  <p> load(file, '-mat') loads the figure data into a matlab structure; The relevant figure data (a nested structure) is hiding inside of the hgS_070000 key. This is then converted into a figure with struct2handle(figure.hgS_070000, 0) -- the zero corresponding to the parent figure. ('root figure': the Matlab environment.)
+  </p>
+
+
+<h3> Usage &amp; Limitations: </h3>
+  <ul>
+    <li> Script was created and tested on R2011A. I have no idea about other versions, but it <emph>should</emph> work. </li>
+    <li> You cannot execute this script using cell mode because it doesn't set the PATH correctly. </li>
+    <li> If you find yourself playing with the parameters a lot, you might want to check out the console simulation mode. It skips the lengthy generation of images for the 'movie' and just prints out the current state on the console. </li>
+  </ul>
+
+<h3> Parameter Notes: </h3>
+  <ul>
+    <li> <b>Gallons Spilled:</b> The maximum value, 100k, is still 110 times smaller than the accepted estimate for the real spill. </li>
+    <li> <b>Wind Velocity:</b> Any value of significance quickly blows the oil out of the field; Wind speeds can reach as high as 40 miles per hour, which yields depressing results. </li>
+    <li> <b> Iterations: </b> More captures will make not only for a richer simulation, but also a longer one. Too long of a simulation and you may be watching the open ocean for a while. (And waiting a long time to watch anything.)</li>
+  </ul>
+
+<h3> Result of Higher Parameters:</h3>
+  <img src="/img/medium.gif"></img>
   <br /> <br />
-  <p> With evaporation and wind velocity set to higher values, oil can be seen being blown out/evaporated out of cells. Most of the oil is just being blown around, though, probably mostly onto Bligh Island. (Directly to the east of the <a href="http://toolserver.org/~geohack/geohack.php?pagename=Exxon_Valdez_oil_spill&params=60.83333_N_-146.86667_E_region:US-AK_type:landmark"> spill location. </a>)
-</div>
+  <p> With evaporation and wind velocity set to higher values, oil can be seen being blown out/evaporated out of cells. Most of the oil is just being blown around, though, probably mostly onto Bligh Island. (Directly to the east of the <a href="http://toolserver.org/~geohack/geohack.php?pagename=Exxon_Valdez_oil_spill&params=60.83333_N_-146.86667_E_region:US-AK_type:landmark"> spill location. </a>)</p>
+
+<h6> Updated on May 10, 2014. Copyright 2014, Cameron Carroll. </h6>
